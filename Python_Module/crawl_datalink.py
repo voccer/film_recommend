@@ -11,8 +11,12 @@ class SeleniumCrawler():
     def __init__(self, film_list, exclusion_list = None):
         self.film_list = film_list
         self.exclusion_list = exclusion_list
+<<<<<<< HEAD
         self.data_frame = pd.DataFrame(columns = ['Link_Film', 'Name_Film','Start','Date','Description',
                                         'Link_Image','Total_Comment','Positive_Comment'])
+=======
+        #self.data_frame = pd.
+>>>>>>> master
         self.browser = browser.get_driver()
         # self.browser = webdriver.Chrome()
         self.output_image = os.path.dirname(os.path.realpath(__file__)) + "/Data/image"
@@ -53,7 +57,7 @@ class SeleniumCrawler():
         linkImage = soup.find("div", class_="poster").find("img").get("src")
         return [nameFilm, star, date, description, linkImage]
 
-    def run_crawler(self):
+    def run_crawler(self):git
         for index, link in enumerate(self.film_list):
             html = self.get_page(link)
             soup = browser.get_soup(html)
