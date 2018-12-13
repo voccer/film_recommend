@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import requests
 import shutil
+import pandas as pd
 from bs4 import BeautifulSoup
 import os
 import browser
@@ -10,6 +11,7 @@ class SeleniumCrawler():
     def __init__(self, film_list, exclusion_list = None):
         self.film_list = film_list
         self.exclusion_list = exclusion_list
+        self.data_frame = pd.
         self.browser = browser.get_driver()
         self.output_file = os.path.dirname(os.path.realpath(__file__))+"/Data/data"
         self.output_image = os.path.dirname(os.path.realpath(__file__)) + "/Data/image"
@@ -66,6 +68,9 @@ class SeleniumCrawler():
             outputfile.write(self.description + '\n')
             outputfile.write(self.linkImage +'\n')
             outputfile.write("^_^" + '\n')
+
+    def creat_data_frame(self):
+
 
     def run_crawler(self):
         for link in self.film_list:
