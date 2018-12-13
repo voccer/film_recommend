@@ -109,7 +109,5 @@ class GetListFilm:
 
 if __name__ == '__main__':
     list_film = GetListFilm().get_list()
-    for i in list:
-        print(i)
     exclusion_list = ["https://www.imdb.com/title/tt4123430/?ref_=inth_ov_tt"]
     crawler = SeleniumCrawler(list_film)

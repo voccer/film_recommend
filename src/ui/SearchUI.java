@@ -11,6 +11,15 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -37,7 +46,7 @@ public class SearchUI extends JFrame {
 			 ckbComedy, ckbCrime, ckbDrama, ckbFamily, ckbFantasy,
 			 ckbGameShow, ckbHistory, ckbHorror, ckbMusic, ckbMusical,
 			 ckbMystery, ckbNews, ckbRealityTV, ckbRomance, ckbSport,
-			 ckbTalkShow, ckbThriller, ckbWar;
+			 ckbTalkShow, ckbThriller, ckbWar, ckbWestern;
 
 	// Check box Companies
 	Checkbox ckb20thCenturyFox, ckbSony, ckbDreamWork, ckbMGM,
@@ -166,6 +175,7 @@ public class SearchUI extends JFrame {
 		ckbTalkShow   = new Checkbox("Talk show");
 		ckbThriller   = new Checkbox("Thriller");
 		ckbWar        = new Checkbox("War");
+		ckbWestern    = new Checkbox("Western");
 
 		pnTopRight.add(ckbAction);    pnTopRight.add(ckbAdventure);
 		pnTopRight.add(ckbAnimation); pnTopRight.add(ckbBiography);
@@ -178,6 +188,7 @@ public class SearchUI extends JFrame {
 		pnTopRight.add(ckbRealityTV); pnTopRight.add(ckbRomance);
 		pnTopRight.add(ckbSport);     pnTopRight.add(ckbTalkShow);
 		pnTopRight.add(ckbThriller);  pnTopRight.add(ckbWar);
+		pnTopRight.add(ckbWestern);
 
 
 
@@ -238,11 +249,144 @@ public class SearchUI extends JFrame {
 	{
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				handingInfoSearch();
+				//handingInfoSearch();
+				writeFile();
 			}
 		});
 	}
+	
+	protected void writeFile() {
+		
+		
+		String path = System.getProperty("user.dir");
+		File file = new File(path + "/Communication/request.txt");
+//		System.out.println(file.getAbsolutePath());
+//		System.out.println(file.exists());
+		if(file.exists()) {
+			file.delete();
+		}
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	     // Tạo một OutputStream (luồng đầu ra) để ghi dữ liệu vào file.
+		OutputStream out = null;
+		try {
+			out = new FileOutputStream(file.getAbsolutePath());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		// Tạo một Character Stream (luồng ghi ký tự) bao lấy OutputStream ở trên.
+		// Mã hóa (encoding) là UTF-8.
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
+		
+		try {
+			bw.write(ckbFeatureFilm.getLabel() + " " + Integer.toString(ckbFeatureFilm.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbTVMovie.getLabel() + " " + Integer.toString(ckbTVMovie.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbTVSeries.getLabel() + " " + Integer.toString(ckbTVMovie.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbTVEpisode.getLabel() + " " + Integer.toString(ckbTVEpisode.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbTVSpecial.getLabel() + " " + Integer.toString(ckbTVSpecial.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbMiniSeries.getLabel() + " " + Integer.toString(ckbMiniSeries.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbDocumentary.getLabel() + " " + Integer.toString(ckbDocumentary.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbVideoGame.getLabel() + " " + Integer.toString(ckbVideoGame.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbShortFilm.getLabel() + " " + Integer.toString(ckbShortFilm.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbVideo.getLabel() + " " + Integer.toString(ckbVideo.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbTVShort.getLabel() + " " + Integer.toString(ckbTVShort.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbAction.getLabel() + " " + Integer.toString(ckbAction.getState()? 1:0));
+			bw.newLine();
+			
+			bw.write(ckbAdventure.getLabel() + " " + Integer.toString(ckbAdventure.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbAnimation.getLabel() + " " + Integer.toString(ckbAnimation.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbBiography.getLabel() + " " + Integer.toString(ckbBiography.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbComedy.getLabel() + " " + Integer.toString(ckbComedy.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbCrime.getLabel() + " " + Integer.toString(ckbCrime.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbDrama.getLabel() + " " + Integer.toString(ckbDrama.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbFamily.getLabel() + " " + Integer.toString(ckbFamily.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbFantasy.getLabel() + " " + Integer.toString(ckbFantasy.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbGameShow.getLabel() + " " + Integer.toString(ckbGameShow.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbHistory.getLabel() + " " + Integer.toString(ckbHistory.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbHorror.getLabel() + " " + Integer.toString(ckbHorror.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbMusic.getLabel() + " " + Integer.toString(ckbMusic.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbMusical.getLabel() + " " + Integer.toString(ckbMusical.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbMystery.getLabel() + " " + Integer.toString(ckbMystery.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbNews.getLabel() + " " + Integer.toString(ckbNews.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbRealityTV.getLabel() + " " + Integer.toString(ckbRealityTV.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbRomance.getLabel() + " " + Integer.toString(ckbRomance.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbSport.getLabel() + " " + Integer.toString(ckbSport.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbTalkShow.getLabel() + " " + Integer.toString(ckbTalkShow.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbThriller.getLabel() + " " + Integer.toString(ckbThriller.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbWar.getLabel() + " " + Integer.toString(ckbWar.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbWestern.getLabel() + " " + Integer.toString(ckbWestern.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckb20thCenturyFox.getLabel() + " " + Integer.toString(ckb20thCenturyFox.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbSony.getLabel() + " " + Integer.toString(ckbSony.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbDreamWork.getLabel() + " " + Integer.toString(ckbDreamWork.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbMGM.getLabel() + " " + Integer.toString(ckbMGM.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbParamount.getLabel() + " " + Integer.toString(ckbParamount.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbUniversal.getLabel() + " " + Integer.toString(ckbUniversal.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbWaltDisney.getLabel() + " " + Integer.toString(ckbWaltDisney.getState()? 1:0));
+			bw.newLine();
+			bw.write(ckbWarnerBros.getLabel() + " " + Integer.toString(ckbWarnerBros.getState()? 1:0));
+			bw.newLine();
+			bw.write(txtDateFrom.getText());
+			bw.newLine();
+			bw.write(txtDateTo.getText());
+			bw.newLine();
+			bw.write(txtNumberOfFilms.getText());
+			bw.newLine();
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+	}
 	protected void handingInfoSearch() {
 		if(txtNumberOfFilms.getText().isEmpty())
 		{
@@ -265,4 +409,4 @@ public class SearchUI extends JFrame {
 		this.setResizable(false);
 		this.setVisible(true);
 	}
-}
+} 

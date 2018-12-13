@@ -11,7 +11,7 @@ class SeleniumCrawler():
     def __init__(self, film_list, exclusion_list = None):
         self.film_list = film_list
         self.exclusion_list = exclusion_list
-        self.data_frame = pd.
+        #self.data_frame = pd.
         self.browser = browser.get_driver()
         self.output_file = os.path.dirname(os.path.realpath(__file__))+"/Data/data"
         self.output_image = os.path.dirname(os.path.realpath(__file__)) + "/Data/image"
