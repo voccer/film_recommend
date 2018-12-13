@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from Browser import Browser
+import browser
 from selenium.webdriver.chrome.options import Options
 import time
 from bs4 import BeautifulSoup
@@ -13,7 +13,7 @@ import re
 class SeleniumCrawler(object):
 
     def __init__(self, url):
-        self.browser = Browser().get_driver()
+        self.browser = browser.get_driver()
         self.output_file = os.path.dirname(os.path.realpath(__file__))+"/Data/comment"
         self.url = url
         self.star = []
@@ -68,7 +68,7 @@ class SeleniumCrawler(object):
 
     def run_crawler(self):
         html = self.get_page(self.url)
-        soup = Browser().get_soup(html = html)
+        soup = browser.get_soup(html = html)
         if soup is not None:  # If we have soup - parse and write to our csv file
             self.get_data(soup)
             self.txt_output()

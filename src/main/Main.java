@@ -10,6 +10,7 @@ public class Main {
 		SearchUI ui = new SearchUI("Searching...");
 		ui.showWindow();
 		
+		
 		//ResultUI ui = new ResultUI("Result");
 		//ui.showWindow();
 	}
