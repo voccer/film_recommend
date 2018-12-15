@@ -18,8 +18,13 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
+<<<<<<< HEAD
+        #self.browser = browser.get_driver()
+        self.browser = webdriver.Chrome()
+=======
         self.browser = Browser.get_driver()
         # self.browser = webdriver.Chrome()
+>>>>>>> fd7c61a5a83611d6a5f8857d1257eec8e84a13ce
         self.browser.get("https://www.imdb.com/search/title")
 
     """

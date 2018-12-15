@@ -417,49 +417,36 @@ public class SearchUI extends JFrame {
 
 	}
 
-	public void executePython() {
+	public void executePython()  {
 		String dirPath = System.getProperty("user.dir");
-		File filePy = new File(dirPath + "/demo.py");
-		if (filePy.exists()) {
-			filePy.delete();
+		File filePythonExecute = new File(dirPath + "/Python_Module/main.py");
+		if (!filePythonExecute.exists()) {
+			System.out.println("not found file");
 		}
-		try {
-			filePy.createNewFile();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 
-		OutputStream out = null;
+		Process process = null;
+		ProcessBuilder pb = new ProcessBuilder("/home/voccer/anaconda3/bin/python", filePythonExecute.getAbsolutePath());
 		try {
-			out = new FileOutputStream(filePy.getAbsolutePath());
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Tạo một Character Stream (luồng ghi ký tự) bao lấy OutputStream ở trên.
-		// Mã hóa (encoding) là UTF-8.
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out));
-
-		try {
-			bw.write("print('abc')");
-			bw.close();
+			process = pb.start();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-
-		Process process
-		try {
-			process = Runtime.getRuntime().exec("python " + filePy.getAbsolutePath());
-			watch(process);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		watch(process);
+		File csv = new File(dirPath + "/Data/file.csv");
+		while(!csv.exists()) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Searching csv file");
 		}
-		// Watch the process
+		System.out.println("begining next moulde");
+		// Module xuat ket qua
 		
 	}
 	

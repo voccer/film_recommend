@@ -63,5 +63,6 @@ class SeleniumCrawler():
                 get_comment.GetComment().run_crawler(link + "reviews")
                 print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
+
         self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
         self.browser.close()
