@@ -54,6 +54,7 @@ class SeleniumCrawler():
         return [nameFilm, star, date, description, linkImage]
 
     def run_crawler(self):
+        print("comehere")
         for index, link in enumerate(self.film_list):
             html = self.get_page(link)
             soup = Browser.get_soup(html)
@@ -63,7 +64,7 @@ class SeleniumCrawler():
                 get_comment.run_crawler(link + "reviews")
                 print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
-
+       
         self.data_frame.to_csv(Setting.DIR_PATH_DATA + "/file.csv", sep='\t')
 
         self.browser.close()
