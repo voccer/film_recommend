@@ -93,7 +93,7 @@ public class SearchUI extends JFrame {
 		ckbTVSeries = new Checkbox("TV Series");
 		ckbTVEpisode = new Checkbox("TV Episode");
 		ckbTVSpecial = new Checkbox("TV Special");
-		ckbMiniSeries = new Checkbox("Mini Series");
+		ckbMiniSeries = new Checkbox("Mini-Series");
 		ckbDocumentary = new Checkbox("Documentary");
 		ckbVideoGame = new Checkbox("Video Game");
 		ckbShortFilm = new Checkbox("Short Film");
@@ -163,17 +163,17 @@ public class SearchUI extends JFrame {
 		ckbDrama = new Checkbox("Drama");
 		ckbFamily = new Checkbox("Family");
 		ckbFantasy = new Checkbox("Fantasy");
-		ckbGameShow = new Checkbox("Game show");
+		ckbGameShow = new Checkbox("Game-show");
 		ckbHistory = new Checkbox("History");
 		ckbHorror = new Checkbox("Horror");
 		ckbMusic = new Checkbox("Music");
 		ckbMusical = new Checkbox("Musical");
 		ckbMystery = new Checkbox("Mystery");
 		ckbNews = new Checkbox("News");
-		ckbRealityTV = new Checkbox("Reality TV");
+		ckbRealityTV = new Checkbox("Reality-TV");
 		ckbRomance = new Checkbox("Romance");
 		ckbSport = new Checkbox("Sport");
-		ckbTalkShow = new Checkbox("Talk show");
+		ckbTalkShow = new Checkbox("Talk-show");
 		ckbThriller = new Checkbox("Thriller");
 		ckbWar = new Checkbox("War");
 		ckbWestern = new Checkbox("Western");
@@ -216,7 +216,7 @@ public class SearchUI extends JFrame {
 
 		ckb20thCenturyFox = new Checkbox("20th Century Fox");
 		ckbSony = new Checkbox("Sony");
-		ckbDreamWork = new Checkbox("Dream Work");
+		ckbDreamWork = new Checkbox("DreamWorks");
 		ckbMGM = new Checkbox("MGM");
 		ckbParamount = new Checkbox("Paramount");
 		ckbUniversal = new Checkbox("Universal");
@@ -424,7 +424,7 @@ public class SearchUI extends JFrame {
 			System.out.println("not found file");
 		}
 		
-
+		
 		Process process = null;
 		ProcessBuilder pb = new ProcessBuilder("/home/voccer/anaconda3/bin/python", filePythonExecute.getAbsolutePath());
 		try {
