@@ -3,19 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dd7d1605-64ac-481e-8946-e55cc0262e67" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Communication/request" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Communication/request.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Communication/request.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/stopword.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Data/stop_word.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python_Module/Setting.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/Setting.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python_Module/browser.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/Browser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python_Module/crawl_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/get_comment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Python_Module/crawl_datalink.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/crawl_datalink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python_Module/get_list_film.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/get_list_film.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python_Module/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python_Module/nlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python_Module/nlp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/crawl_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/crawl_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/crawl_datalink.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/crawl_datalink.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/get_list_film.py" beforeDir="false" afterPath="$PROJECT_DIR$/bin/get_list_film.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,8 +61,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Python_Module/crawl_datalink.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            <state relative-caret-position="246">
+              <caret line="65" column="66" selection-start-line="65" selection-start-column="66" selection-end-line="65" selection-end-column="66" />
               <folding>
                 <element signature="e#1#16#0" expanded="true" />
               </folding>
@@ -85,7 +73,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Python_Module/Browser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="107">
               <caret line="14" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
@@ -97,8 +85,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Python_Module/get_comment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+            <state relative-caret-position="1700">
+              <caret line="100" column="32" lean-forward="true" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -343,18 +334,18 @@
     <frame x="49" y="25" width="1317" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25811437" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25811437" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32899022" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29967427" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.29967427" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2980456" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2980456" />
       <window_info anchor="bottom" id="Python Console" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.32899022" />
@@ -427,16 +418,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Python_Module/Browser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Communication/request.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
@@ -483,15 +464,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Python_Module/get_comment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="14" lean-forward="true" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+        <state relative-caret-position="1700">
+          <caret line="100" column="32" lean-forward="true" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Python_Module/Browser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Python_Module/crawl_datalink.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+        <state relative-caret-position="246">
+          <caret line="65" column="66" selection-start-line="65" selection-start-column="66" selection-end-line="65" selection-end-column="66" />
           <folding>
             <element signature="e#1#16#0" expanded="true" />
           </folding>
