@@ -5,14 +5,14 @@ import shutil
 import pandas as pd
 from bs4 import BeautifulSoup
 import os
-import browser
+import Browser
 
 class SeleniumCrawler():
     def __init__(self, film_list, exclusion_list = None):
         self.film_list = film_list
         self.exclusion_list = exclusion_list
         #self.data_frame = pd.
-        self.browser = browser.get_driver()
+        self.browser = Browser.get_driver()
         self.output_file = os.path.dirname(os.path.realpath(__file__))+"/Data/data"
         self.output_image = os.path.dirname(os.path.realpath(__file__)) + "/Data/image"
         self.nameFilm = ""
@@ -75,7 +75,7 @@ class SeleniumCrawler():
     def run_crawler(self):
         for link in self.film_list:
             html = self.get_page(link)
-            soup = browser.get_soup(html)
+            soup = Browser.get_soup(html)
             if soup is not None:  # If we have soup - parse and write to our csv file
                 self.get_data(soup)
                 self.txt_output()

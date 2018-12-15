@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import browser, Setting as setting
+import Browser, Setting as setting
 from crawl_datalink import SeleniumCrawler
 from selenium import webdriver
 import time
@@ -18,7 +18,7 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
-        self.browser = browser.get_driver()
+        self.browser = Browser.get_driver()
         # self.browser = webdriver.Chrome()
         self.browser.get("https://www.imdb.com/search/title")
 
@@ -27,7 +27,7 @@ class GetListFilm:
     Chỉ lưu các trường hợp cần tìm vào mảng
     """
     def __read_request_file(self):
-        with open(setting.DIR_PATH_COMMUNICATION + "/request", mode ='r') as file:
+        with open(setting.DIR_PATH_COMMUNICATION + "/request.txt", mode ='r') as file:
             file = file.readlines()
         for f in file:
             if (f.find('1') != -1) and (not f.replace('-','').strip('\n ').isdigit()):
@@ -79,7 +79,7 @@ class GetListFilm:
     """
     def __get_list_film(self):
         html = self.browser.page_source
-        soup = browser.get_soup(html=html)
+        soup = Browser.get_soup(html=html)
         film_div = []
 
         # Tìm đến khi nào đủ số lượng div
@@ -91,7 +91,7 @@ class GetListFilm:
         list_film = []
         count = 0
         for x in film_div:
-            list_film.append("https://www.imdb.com/" + x.contents[3].find('a', href = True)['href'])
+            list_film.append("https://www.imdb.com/" + x.contents[3].find('a', href = True)['href'].split('?')[0])
             count += 1
             if count == self.number: break
         print(len(list_film))
@@ -106,8 +106,3 @@ class GetListFilm:
         self.browser.close()
 
         return list
-
-if __name__ == '__main__':
-    list_film = GetListFilm().get_list()
-    exclusion_list = ["https://www.imdb.com/title/tt4123430/?ref_=inth_ov_tt"]
-    crawler = SeleniumCrawler(list_film).run_crawler()

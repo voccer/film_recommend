@@ -1,7 +1,7 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import browser, Setting as setting
+import Browser, Setting as setting
 from crawl_datalink import SeleniumCrawler
 from selenium import webdriver
 import time
@@ -79,7 +79,7 @@ class GetListFilm:
     """
     def __get_list_film(self):
         html = self.browser.page_source
-        soup = browser.get_soup(html=html)
+        soup = Browser.get_soup(html=html)
         film_div = []
 
         # Tìm đến khi nào đủ số lượng div
