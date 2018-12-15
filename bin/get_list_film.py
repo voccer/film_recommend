@@ -50,7 +50,7 @@ class GetListFilm:
             print(self.request)
             e1 = wait.until(EC.presence_of_element_located((By.XPATH, xpath.replace('%', x))))
             e1.click()
-            time.sleep(.1)
+            time.sleep(.2)
 
     """
     Thực hiện điền ngày tháng thích hợp vào hộp thời gian 

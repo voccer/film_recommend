@@ -3,12 +3,8 @@ TV Movie 0
 TV Series 0
 TV Episode 0
 TV Special 0
-<<<<<<< HEAD
-Mini Series 0
-=======
-Mini-Series 1
->>>>>>> ffefacec3448e54d6d4399440e20c7562051752b
-Documentary 0
+Mini-Series 0
+Documentary 1
 Video Game 0
 Short Film 0
 Video 0
@@ -21,36 +17,29 @@ Comedy 0
 Crime 0
 Drama 0
 Family 0
-Fantasy 1
-Game show 0
+Fantasy 0
+Game-show 0
 History 0
 Horror 0
 Music 0
 Musical 0
 Mystery 0
 News 0
-Reality TV 0
+Reality-TV 0
 Romance 0
 Sport 0
-Talk show 0
+Talk-show 0
 Thriller 0
 War 0
 Western 0
 20th Century Fox 0
 Sony 0
-Dream Work 0
+DreamWorks 0
 MGM 0
-Paramount 1
+Paramount 0
 Universal 0
 Walt Disney 0
-<<<<<<< HEAD
 Warner Bros 0
 
 
 14
-=======
-Warner Bros 1
-
-
-39
->>>>>>> ffefacec3448e54d6d4399440e20c7562051752b

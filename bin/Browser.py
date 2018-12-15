@@ -14,9 +14,6 @@ def get_driver():
     chrome_options.add_argument("--window-size=%s" % "1920,1080")
     browser = webdriver.Chrome(options=chrome_options)
 
-
-  
-
     return browser
 
 """

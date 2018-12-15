@@ -59,6 +59,7 @@ class SeleniumCrawler():
     def run_crawler(self):
         print("comehere")
         for index, link in enumerate(self.film_list):
+            print(index)
             html = self.get_page(link)
             soup = Browser.get_soup(html)
             if soup is not None:  # If we have soup - parse and write to our csv file
@@ -68,16 +69,10 @@ class SeleniumCrawler():
                 print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
 
-       
+        
         self.data_frame.to_csv(Setting.DIR_PATH_DATA + "/file.csv", sep='\t')
 
         self.browser.close()
         
         
-        
-        
-
-
-        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
-        self.browser.close()
-
+  
