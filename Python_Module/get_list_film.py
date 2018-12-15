@@ -2,10 +2,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import Browser, Setting as setting
-from crawl_datalink import SeleniumCrawler
 from selenium import webdriver
 import time
 import numpy as np
+
 
 class GetListFilm:
     """
@@ -18,12 +18,7 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
-
-
-        self.browser = webdriver.Chrome()
-
-
-
+        self.browser = Browser.get_driver()
         self.browser.get("https://www.imdb.com/search/title")
 
     """
@@ -80,8 +75,7 @@ class GetListFilm:
             e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@class='lister-page-next next-page']")))
             e1.click()
             return True
-        except(Exception):
-            return False
+        except(Exception): return False
 
     """
     Thực hiện tìm link film và lấy vào list
@@ -93,7 +87,7 @@ class GetListFilm:
 
         # Tìm đến khi nào đủ số lượng div
         while len(film_div) < self.number:
-            film_div = film_div + soup.find_all("div", class_= "lister-item mode-advanced")
+            film_div = film_div + soup.find_all("div", class_="lister-item mode-advanced")
             if (not self.__click_next()): break
 
         # Trích rút các href trong các thẻ 'a', đến khi nào đủ number thì dùng lại

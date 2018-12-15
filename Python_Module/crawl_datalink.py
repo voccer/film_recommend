@@ -10,8 +10,8 @@ class SeleniumCrawler():
     def __init__(self, film_list, exclusion_list = None):
         self.film_list = film_list
         self.exclusion_list = exclusion_list
-        self.data_frame = pd.DataFrame(columns = ['LinkFilm', 'NameFilm','Start','Date','Description',
-                                        'LinkImage','TotalComment','PositiveComment'])
+        self.data_frame = pd.DataFrame(columns = ['LinkFilm', 'NameFilm','Star','Date','Description',
+                                        'LinkImage','TotalComment','PositiveComment','ScoreComment','AVGStar'])
         self.browser = Browser.get_driver()
         self.output_image = os.path.dirname(os.path.realpath(__file__)) + "/Data/image"
 
@@ -44,27 +44,23 @@ class SeleniumCrawler():
     """
     def get_data(self, soup):
         nameFilm = soup.find("div", class_="title_wrapper").find("h1").get_text().replace("\n"," ")
-        try:
-            star = soup.find("div", class_="ratingValue").find("span", attrs = {"itemprop" : "ratingValue"}).get_text().replace("\n"," ")
-        except(Exception):
-            star = ""
+        try: star = soup.find("div", class_="ratingValue").find("span", attrs={"itemprop" : "ratingValue"}).get_text().replace("\n"," ")
+        except(Exception): star = ""
         date = soup.find("div", class_="subtext").find("a", title="See more release dates").get_text().replace("\n"," ")
-        description = (soup.find("div", class_="summary_text").get_text().strip().replace("\n"," "))
-        try:
-            linkImage = soup.find("div", class_="poster").find("img").get("src")
-        except(Exception):
-            linkImage = ""
+        description = (soup.find("div", class_="summary_text").get_text().strip().replace("\n", " "))
+        try: linkImage = soup.find("div", class_="poster").find("img").get("src")
+        except(Exception): linkImage = ""
         return [nameFilm, star, date, description, linkImage]
 
     def run_crawler(self):
         for index, link in enumerate(self.film_list):
-            print(index)
             html = self.get_page(link)
             soup = Browser.get_soup(html)
-            if soup is not None:  # If we have soup - parse and write to our csv file
-                table = [link] + self.get_data(soup) + ['1', '1']
-                get_comment.GetComment().run_crawler(link + "reviews")
-                self.data_frame.loc[index] = table
+            pos, total, avg_star = get_comment.GetComment(self.browser).run_crawler(link + "reviews")
+            table = [link] + self.get_data(soup) + \
+                        [total, pos, "{0:.2f}".format(pos/total) if total != 0 else -1, "{0:.2f}".format(avg_star)]
+            self.data_frame.loc[index] = table
 
-        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
         self.browser.close()
+        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
+

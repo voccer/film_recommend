@@ -2,9 +2,12 @@ import logging
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+
 import Browser
 import time
 import re
+import pickle
+from scipy import sparse
 
 from nltk.tokenize import word_tokenize
 import numpy as np
@@ -12,8 +15,8 @@ import Setting as setting
 
 
 class GetComment():
-    def __init__(self):
-        self.browser = Browser.get_driver()
+    def __init__(self, browser):
+        self.browser = browser
         self.star = []
         self.comment = []
 
@@ -23,8 +26,8 @@ class GetComment():
     return : source page sau khi đã click hết vào các nút load more 
     """
     def get_page(self, url):
+        self.browser.get(url)
         try:
-            self.browser.get(url)
             wait = WebDriverWait(self.browser, 3)
             while True:
                 e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(),'Load More')]")))
@@ -37,7 +40,8 @@ class GetComment():
                 else: break
         except Exception as e:
             logging.exception(e)
-            return self.browser.page_source
+
+        return self.browser.page_source
 
     """
     Phân tích mã nguồn ở soup truyền vào và lấy comment, đánh giá theo sao của người dùng 
@@ -49,15 +53,16 @@ class GetComment():
             if x.find("div", class_="ipl-ratings-bar") is None:
                 self.star.append(0)
             else:
-                self.star.append(x.find("div", class_="ipl-ratings-bar").find("span").find("span").get_text())
+                self.star.append(int(x.find("div", class_="ipl-ratings-bar").find("span").find("span").get_text()))
 
     def run_crawler(self, url):
         html = self.get_page(url)
         soup = Browser.get_soup(html=html)
-        if soup is not None:  # If we have soup - parse and write to our csv file
-            self. get_data(soup)
-            FeatureFileBuilder().build_feature_from_list_review(self.comment)
-        self.browser.close()
+        self. get_data(soup)
+        if len(self.comment) == 0 : return 0, 0, 0
+        pos, total = ML().get_score(self.comment)
+        avg_star = np.sum(np.array(self.star))/total
+        return pos, total, avg_star
 
 
 class NLP:
@@ -100,6 +105,7 @@ class NLP:
         tokens = self.split_words()
         return [word for word in tokens if word not in self.stopword]
 
+
 class FeatureFileBuilder:
     # Đọc number file trong folder cho trước, biểu thị dưới dạng BoW
     def build_feature_from_list_review(self, list_review):
@@ -130,7 +136,6 @@ class FeatureFileBuilder:
         S = np.array([]).astype(int)
         for word in bow:
             S = np.append(S, np.array([count, word, bow.get(word)]))
-        print(S)
         return S
 
 
@@ -158,4 +163,22 @@ class FileReader():
                 count += 1
         return dictionary_
 
+
+class ML():
+    def __transform_to_coo_matrix(self, dat, row, col):
+        dat = sparse.coo_matrix((dat[:, 2], (dat[:, 0], dat[:, 1])), shape=(row, col))
+        return dat
+
+    def get_score(self, comment):
+        feature = FeatureFileBuilder().build_feature_from_list_review(comment)
+        print(feature)
+        n_feature = feature[-1][0] + 1
+        n_word = 140200
+        feature = self.__transform_to_coo_matrix(feature, n_feature, n_word)
+        probabilities = loaded_model.predict(feature)
+        pos = np.count_nonzero(probabilities)
+        print(pos, np.size(probabilities))
+        return (pos, np.size(probabilities))
+
 dictionary = FileReader().read_dictionary(setting.DIR_PATH_DATA + "/dictionary.txt")
+loaded_model = pickle.load((open(setting.DIR_PATH_DATA + "/final_model.sav", 'rb')))
