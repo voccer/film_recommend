@@ -69,9 +69,13 @@ class SeleniumCrawler():
                 print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
 
+<<<<<<< HEAD
         
         self.data_frame.to_csv(Setting.DIR_PATH_DATA + "/file.csv", sep='\t')
 
+=======
+        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv", index=False)
+>>>>>>> 5df74e04809f38ebc06cbcd6543f0e1d64983ae6
         self.browser.close()
         
         

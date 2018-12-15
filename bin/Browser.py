@@ -8,12 +8,18 @@ Cài đặt driver chorme và không cho hiển thị window chrome khi chạy
 """
 def get_driver():
     chrome_options = Options()
+<<<<<<< HEAD
 
 
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=%s" % "1920,1080")
     browser = webdriver.Chrome(options=chrome_options)
 
+=======
+    # chrome_options.add_argument("--headless")
+    # chrome_options.add_argument("--window-size=%s" % "1920,1080")
+    browser = webdriver.Chrome(chrome_options=chrome_options)
+>>>>>>> 5df74e04809f38ebc06cbcd6543f0e1d64983ae6
     return browser
 
 """

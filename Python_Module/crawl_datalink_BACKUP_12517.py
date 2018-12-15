@@ -57,6 +57,7 @@ class SeleniumCrawler():
         return [nameFilm, star, date, description, linkImage]
 
     def run_crawler(self):
+        print("comehere")
         for index, link in enumerate(self.film_list):
             print(index)
             html = self.get_page(link)
@@ -67,5 +68,15 @@ class SeleniumCrawler():
                 print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
 
-        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
+<<<<<<< HEAD
+        
+        self.data_frame.to_csv(Setting.DIR_PATH_DATA + "/file.csv", sep='\t')
+
         self.browser.close()
+        
+        
+  
+=======
+        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv", index=False)
+        self.browser.close()
+>>>>>>> 5df74e04809f38ebc06cbcd6543f0e1d64983ae6

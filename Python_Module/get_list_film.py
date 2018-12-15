@@ -79,8 +79,9 @@ class GetListFilm:
         try:
             e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@class='lister-page-next next-page']")))
             e1.click()
+            return True
         except(Exception):
-            return
+            return False
 
     """
     Thực hiện tìm link film và lấy vào list
@@ -93,7 +94,7 @@ class GetListFilm:
         # Tìm đến khi nào đủ số lượng div
         while len(film_div) < self.number:
             film_div = film_div + soup.find_all("div", class_= "lister-item mode-advanced")
-            self.__click_next()
+            if (not self.__click_next()): break
 
         # Trích rút các href trong các thẻ 'a', đến khi nào đủ number thì dùng lại
         list_film = []
