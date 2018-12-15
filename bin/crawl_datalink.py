@@ -60,12 +60,11 @@ class SeleniumCrawler():
             if soup is not None:  # If we have soup - parse and write to our csv file
                 table = [link] + self.get_data(soup) + ['1', '1']
                 print(link)
-                get_comment.run_crawler(link + "reviews")
+                get_comment.GetComment().run_crawler(link + "reviews")
                 print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
 
-        self.data_frame.to_csv(Setting.DIR_PATH_DATA + "/file.csv", sep='\t')
-
+        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv", index=False)
         self.browser.close()
         
         

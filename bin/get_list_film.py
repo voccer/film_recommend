@@ -18,13 +18,7 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
-<<<<<<< HEAD
-        #self.browser = browser.get_driver()
-        self.browser = webdriver.Chrome()
-=======
         self.browser = Browser.get_driver()
-        # self.browser = webdriver.Chrome()
->>>>>>> fd7c61a5a83611d6a5f8857d1257eec8e84a13ce
         self.browser.get("https://www.imdb.com/search/title")
 
     """
@@ -68,14 +62,17 @@ class GetListFilm:
     """
     def __click_search(self):
         wait = WebDriverWait(self.browser, 10)
-        e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//button[@type='submit' and @class='primary']")))
-        e1.click()
+        try:
+            e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//button[@type='submit' and @class='primary']")))
+            e1.click()
+            return True
+        except (Exception): return False
 
     """
     Thực hiện bấm nút Next
     """
     def __click_next(self):
-        wait = WebDriverWait(self.browser, 10)
+        wait = WebDriverWait(self.browser, 3)
         e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@class='lister-page-next next-page']")))
         e1.click()
 
@@ -90,7 +87,7 @@ class GetListFilm:
         # Tìm đến khi nào đủ số lượng div
         while len(film_div) < self.number:
             film_div = film_div + soup.find_all("div", class_= "lister-item mode-advanced")
-            self.__click_next()
+            if (not self.__click_next()): break
 
         # Trích rút các href trong các thẻ 'a', đến khi nào đủ number thì dùng lại
         list_film = []
@@ -99,7 +96,6 @@ class GetListFilm:
             list_film.append("https://www.imdb.com/" + x.contents[3].find('a', href = True)['href'].split('?')[0])
             count += 1
             if count == self.number: break
-        print(len(list_film))
         return np.array(list_film)
 
     def get_list(self):

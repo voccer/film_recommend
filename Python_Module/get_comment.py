@@ -24,7 +24,7 @@ class GetComment():
     def get_page(self, url):
         try:
             self.browser.get(url)
-            wait = WebDriverWait(self.browser, 10)
+            wait = WebDriverWait(self.browser, 5)
             while True:
                 e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(),'Load More')]")))
                 if not e1.is_displayed():
@@ -33,14 +33,11 @@ class GetComment():
                         time.sleep(.2)
                         count += 1
                         print(count)
-                if e1.is_displayed():
-                    e1.click()
+                if e1.is_displayed(): e1.click()
                 else: break
-
-            return self.browser.page_source
         except Exception as e:
             logging.exception(e)
-            return
+            return self.browser.page_source
 
     """
     Phân tích mã nguồn ở soup truyền vào và lấy comment, đánh giá theo sao của người dùng 
@@ -109,7 +106,6 @@ class FeatureFileBuilder:
         count = 0
         for review in list_review:
             list_word = NLP(review).get_words_feature()
-            print(list_word)
             feature = np.append(feature, self.__build_feature_from_file(list_word, count))
             count += 1
         return feature.reshape(-1,3)
@@ -133,6 +129,7 @@ class FeatureFileBuilder:
         S = np.array([]).astype(int)
         for word in bow:
             S = np.append(S, np.array([count, word, bow.get(word)]))
+        print(S)
         return S
 
 class FileReader():
@@ -160,3 +157,4 @@ class FileReader():
         return dictionary
 
 dictionary = FileReader().read_dictionary(setting.DIR_PATH_DATA + "/dictionary.txt")
+print("toanloi")
