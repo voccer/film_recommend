@@ -10,6 +10,7 @@ from nltk.tokenize import word_tokenize
 import numpy as np
 import Setting as setting
 
+
 class GetComment():
     def __init__(self):
         self.browser = Browser.get_driver()
@@ -24,7 +25,7 @@ class GetComment():
     def get_page(self, url):
         try:
             self.browser.get(url)
-            wait = WebDriverWait(self.browser, 5)
+            wait = WebDriverWait(self.browser, 3)
             while True:
                 e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//button[contains(text(),'Load More')]")))
                 if not e1.is_displayed():
@@ -32,7 +33,6 @@ class GetComment():
                     while (not e1.is_displayed()) and count < 10:
                         time.sleep(.2)
                         count += 1
-                        print(count)
                 if e1.is_displayed(): e1.click()
                 else: break
         except Exception as e:
@@ -46,18 +46,19 @@ class GetComment():
         comment_div = soup.find_all("div", class_=re.compile("lister-item-content"))
         for x in comment_div:
             self.comment.append(x.find("div", class_="content").find("div").get_text().replace("\n"," "))
-            if x.find("div", class_= "ipl-ratings-bar") == None:
+            if x.find("div", class_="ipl-ratings-bar") is None:
                 self.star.append(0)
             else:
-                self.star.append(x.find("div", class_= "ipl-ratings-bar").find("span").find("span").get_text())
+                self.star.append(x.find("div", class_="ipl-ratings-bar").find("span").find("span").get_text())
 
     def run_crawler(self, url):
         html = self.get_page(url)
-        soup = Browser.get_soup(html = html)
+        soup = Browser.get_soup(html=html)
         if soup is not None:  # If we have soup - parse and write to our csv file
             self. get_data(soup)
             FeatureFileBuilder().build_feature_from_list_review(self.comment)
         self.browser.close()
+
 
 class NLP:
     def __init__(self, text):
@@ -108,7 +109,7 @@ class FeatureFileBuilder:
             list_word = NLP(review).get_words_feature()
             feature = np.append(feature, self.__build_feature_from_file(list_word, count))
             count += 1
-        return feature.reshape(-1,3)
+        return feature.reshape(-1, 3)
 
     """
     Đếm số lần xuất hiện của các từ, sử dụng pp BoW
@@ -120,7 +121,7 @@ class FeatureFileBuilder:
         bow = {}
         for word in list_word:
             index_dict = dictionary.get(word)
-            if (index_dict == None): continue
+            if (index_dict is None): continue
             if index_dict in bow:
                 bow[index_dict] = bow.get(index_dict) + 1
             else: bow[index_dict] = 1
@@ -131,6 +132,7 @@ class FeatureFileBuilder:
             S = np.append(S, np.array([count, word, bow.get(word)]))
         print(S)
         return S
+
 
 class FileReader():
     def read_stop_word(self, filePath):
@@ -148,13 +150,12 @@ class FileReader():
 
     def read_dictionary(self, filePath):
         count = 0
-        dictionary = {}
+        dictionary_ = {}
         # Mỗi từ trong từ điển, loại bỏ ký từ \n ở cuối
         with open(file=filePath, mode='r') as f:
             for word in f.readlines():
-                dictionary[''.join(word.split('\n'))] = count
+                dictionary_[''.join(word.split('\n'))] = count
                 count += 1
-        return dictionary
+        return dictionary_
 
 dictionary = FileReader().read_dictionary(setting.DIR_PATH_DATA + "/dictionary.txt")
-print("toanloi")

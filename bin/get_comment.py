@@ -10,6 +10,7 @@ from nltk.tokenize import word_tokenize
 import numpy as np
 import Setting as setting
 
+
 class GetComment():
     def __init__(self):
         self.browser = Browser.get_driver()
@@ -32,9 +33,7 @@ class GetComment():
                     while (not e1.is_displayed()) and count < 10:
                         time.sleep(.2)
                         count += 1
-                        print(count)
-                if e1.is_displayed():
-                    e1.click()
+                if e1.is_displayed(): e1.click()
                 else: break
 
             return self.browser.page_source
@@ -48,24 +47,25 @@ class GetComment():
     def get_data(self, soup):
         comment_div = soup.find_all("div", class_=re.compile("lister-item-content"))
         for x in comment_div:
-            self.comment.append(x.find("div", class_="content").find("div").get_text().replace("\n"," "))
-            if x.find("div", class_= "ipl-ratings-bar") == None:
+            self.comment.append(x.find("div", class_="content").find("div").get_text().replace("\n", " "))
+            if x.find("div", class_="ipl-ratings-bar") is None:
                 self.star.append(0)
             else:
-                self.star.append(x.find("div", class_= "ipl-ratings-bar").find("span").find("span").get_text())
+                self.star.append(x.find("div", class_="ipl-ratings-bar").find("span").find("span").get_text())
 
     def run_crawler(self, url):
         html = self.get_page(url)
-        soup = Browser.get_soup(html = html)
+        soup = Browser.get_soup(html=html)
         if soup is not None:  # If we have soup - parse and write to our csv file
             self. get_data(soup)
             FeatureFileBuilder().build_feature_from_list_review(self.comment)
         self.browser.close()
 
+
 class NLP:
     def __init__(self, text):
         self.text = text
-        self.stopword, self.leftword= self.set_stopword_and_leftword()
+        self.stop_word, self.left_word = self.set_stopword_and_leftword()
 
     # Tách từ
     def segmentation(self):
@@ -81,10 +81,10 @@ class NLP:
     def remove_negative_word(self):
         tokens = self.segmentation()
         for i in range(len(tokens)-1):
-            if tokens[i] in ["n't","not","no"]:
-                if tokens[i+1] != None and tokens[i+1] in self.leftword:
+            if tokens[i] in ["n't", "not", "no"]:
+                if tokens[i+1] is not None and tokens[i+1] in self.left_word:
                     tokens[i] = ","
-                    tokens[i+1] = self.leftword.get(tokens[i+1])
+                    tokens[i+1] = self.left_word.get(tokens[i + 1])
                     i += 1
         return tokens
 
@@ -100,7 +100,8 @@ class NLP:
     # Loại bỏ stopword
     def get_words_feature(self):
         tokens = self.split_words()
-        return [word for word in tokens if word not in self.stopword]
+        return [word for word in tokens if word not in self.stop_word]
+
 
 class FeatureFileBuilder:
     # Đọc number file trong folder cho trước, biểu thị dưới dạng BoW
@@ -112,7 +113,7 @@ class FeatureFileBuilder:
             print(list_word)
             feature = np.append(feature, self.__build_feature_from_file(list_word, count))
             count += 1
-        return feature.reshape(-1,3)
+        return feature.reshape(-1, 3)
 
     """
     Đếm số lần xuất hiện của các từ, sử dụng pp BoW
@@ -124,7 +125,7 @@ class FeatureFileBuilder:
         bow = {}
         for word in list_word:
             index_dict = dictionary.get(word)
-            if (index_dict == None): continue
+            if (index_dict is None): continue
             if index_dict in bow:
                 bow[index_dict] = bow.get(index_dict) + 1
             else: bow[index_dict] = 1
@@ -135,9 +136,10 @@ class FeatureFileBuilder:
             S = np.append(S, np.array([count, word, bow.get(word)]))
         return S
 
+
 class FileReader():
-    def read_stop_word(self, filePath):
-        with open(filePath, mode='r') as f:
+    def read_stop_word(self, file_path):
+        with open(file_path, mode='r') as f:
             stopwords = set([w.strip() for w in f.readlines()])
         return stopwords
 
@@ -151,12 +153,12 @@ class FileReader():
 
     def read_dictionary(self, filePath):
         count = 0
-        dictionary = {}
+        dictionary_ = {}
         # Mỗi từ trong từ điển, loại bỏ ký từ \n ở cuối
         with open(file=filePath, mode='r') as f:
             for word in f.readlines():
-                dictionary[''.join(word.split('\n'))] = count
+                dictionary_[''.join(word.split('\n'))] = count
                 count += 1
-        return dictionary
+        return dictionary_
 
 dictionary = FileReader().read_dictionary(setting.DIR_PATH_DATA + "/dictionary.txt")
