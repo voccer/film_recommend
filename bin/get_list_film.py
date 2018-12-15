@@ -18,7 +18,7 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
-        # self.browser = Browser.get_driver()
+        #self.browser = browser.get_driver()
         self.browser = webdriver.Chrome()
         self.browser.get("https://www.imdb.com/search/title")
 
@@ -110,4 +110,4 @@ class GetListFilm:
 if __name__ == '__main__':
     list_film = GetListFilm().get_list()
     exclusion_list = ["https://www.imdb.com/title/tt4123430/?ref_=inth_ov_tt"]
-    crawler = SeleniumCrawler(list_film)
+    crawler = SeleniumCrawler(list_film).run_crawler()
