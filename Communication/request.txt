@@ -3,7 +3,7 @@ TV Movie 1
 TV Series 1
 TV Episode 0
 TV Special 0
-Mini Series 1
+Mini-Series 1
 Documentary 0
 Video Game 0
 Short Film 0
@@ -39,14 +39,7 @@ MGM 0
 Paramount 1
 Universal 0
 Walt Disney 0
-<<<<<<< HEAD
-Warner Bros 0
-
-
-12
-=======
 Warner Bros 1
 
 
 39
->>>>>>> fd7c61a5a83611d6a5f8857d1257eec8e84a13ce

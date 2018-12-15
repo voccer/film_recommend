@@ -50,7 +50,10 @@ class SeleniumCrawler():
             star = ""
         date = soup.find("div", class_="subtext").find("a", title="See more release dates").get_text().replace("\n"," ")
         description = (soup.find("div", class_="summary_text").get_text().strip().replace("\n"," "))
-        linkImage = soup.find("div", class_="poster").find("img").get("src")
+        try:
+            linkImage = soup.find("div", class_="poster").find("img").get("src")
+        except(Exception):
+            linkImage = ""
         return [nameFilm, star, date, description, linkImage]
 
     def run_crawler(self):
