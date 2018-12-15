@@ -19,7 +19,10 @@ class GetListFilm:
         self.request_time = []
         self.number = 0
 
+
         self.browser = webdriver.Chrome()
+
+
 
         self.browser.get("https://www.imdb.com/search/title")
 
@@ -44,7 +47,8 @@ class GetListFilm:
         wait = WebDriverWait(self.browser, 10)
         xpath = ".//label[contains(text(),'%')]/preceding-sibling::input[@type='checkbox']"
         for x in self.request:
-            e1 = wait.until(EC.presence_of_element_located((By.XPATH, xpath.replace('%',x))))
+            print(self.request)
+            e1 = wait.until(EC.presence_of_element_located((By.XPATH, xpath.replace('%', x))))
             e1.click()
             time.sleep(.1)
 
@@ -72,8 +76,11 @@ class GetListFilm:
     """
     def __click_next(self):
         wait = WebDriverWait(self.browser, 10)
-        e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@class='lister-page-next next-page']")))
-        e1.click()
+        try:
+            e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@class='lister-page-next next-page']")))
+            e1.click()
+        except(Exception):
+            return
 
     """
     Thực hiện tìm link film và lấy vào list
