@@ -18,8 +18,12 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
-        self.browser = Browser.get_driver()
-        # self.browser = webdriver.Chrome()
+
+
+        self.browser = webdriver.Chrome()
+
+
+
         self.browser.get("https://www.imdb.com/search/title")
 
     """
@@ -46,7 +50,7 @@ class GetListFilm:
             print(self.request)
             e1 = wait.until(EC.presence_of_element_located((By.XPATH, xpath.replace('%', x))))
             e1.click()
-            time.sleep(.1)
+            time.sleep(.2)
 
     """
     Thực hiện điền ngày tháng thích hợp vào hộp thời gian 
@@ -75,8 +79,9 @@ class GetListFilm:
         try:
             e1 = wait.until(EC.presence_of_element_located((By.XPATH, "//a[@class='lister-page-next next-page']")))
             e1.click()
+            return True
         except(Exception):
-            return
+            return False
 
     """
     Thực hiện tìm link film và lấy vào list
@@ -89,7 +94,7 @@ class GetListFilm:
         # Tìm đến khi nào đủ số lượng div
         while len(film_div) < self.number:
             film_div = film_div + soup.find_all("div", class_= "lister-item mode-advanced")
-            self.__click_next()
+            if (not self.__click_next()): break
 
         # Trích rút các href trong các thẻ 'a', đến khi nào đủ number thì dùng lại
         list_film = []
