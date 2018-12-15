@@ -1,24 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import requests
 import shutil
 import pandas as pd
-from bs4 import BeautifulSoup
+import Setting as setting
+import get_comment
 import os
-import browser
+import Browser
 
 class SeleniumCrawler():
     def __init__(self, film_list, exclusion_list = None):
         self.film_list = film_list
         self.exclusion_list = exclusion_list
-
-        self.data_frame = pd.DataFrame(columns = ['Link_Film', 'Name_Film','Start','Date','Description',
-                                        'Link_Image','Total_Comment','Positive_Comment'])
-
-        self.browser = browser.get_driver()
-        # self.browser = webdriver.Chrome()
+        self.data_frame = pd.DataFrame(columns = ['LinkFilm', 'NameFilm','Start','Date','Description',
+                                        'LinkImage','TotalComment','PositiveComment'])
+        self.browser = Browser.get_driver()
         self.output_image = os.path.dirname(os.path.realpath(__file__)) + "/Data/image"
-        # self.linkReview = url + "/reviews"
 
     """
     Mở page dựa trên url truyền vào 
@@ -49,7 +44,10 @@ class SeleniumCrawler():
     """
     def get_data(self, soup):
         nameFilm = soup.find("div", class_="title_wrapper").find("h1").get_text().replace("\n"," ")
-        star = soup.find("div", class_="ratingValue").find("span", attrs = {"itemprop" : "ratingValue"}).get_text().replace("\n"," ")
+        try:
+            star = soup.find("div", class_="ratingValue").find("span", attrs = {"itemprop" : "ratingValue"}).get_text().replace("\n"," ")
+        except(Exception):
+            star = ""
         date = soup.find("div", class_="subtext").find("a", title="See more release dates").get_text().replace("\n"," ")
         description = (soup.find("div", class_="summary_text").get_text().strip().replace("\n"," "))
         linkImage = soup.find("div", class_="poster").find("img").get("src")
@@ -58,9 +56,19 @@ class SeleniumCrawler():
     def run_crawler(self):
         for index, link in enumerate(self.film_list):
             html = self.get_page(link)
-            soup = browser.get_soup(html)
+            soup = Browser.get_soup(html)
             if soup is not None:  # If we have soup - parse and write to our csv file
                 table = [link] + self.get_data(soup) + ['1', '1']
+                print(link)
+                get_comment.run_crawler(link + "reviews")
+                print("Lay phim thu %d" %index)
                 self.data_frame.loc[index] = table
+
         self.data_frame.to_csv(Setting.DIR_PATH_DATA + "/file.csv", sep='\t')
+
         self.browser.close()
+        
+        
+        
+        
+        

@@ -1,7 +1,19 @@
 from nltk.tokenize import word_tokenize
-from src.FileHandler import FileReader
-import src.Setting as Setting
+import Setting as setting
 import numpy as np
+
+def _read_stop_word(filePath):
+    with open(filePath, mode='r') as f:
+        stopwords = set([w.strip() for w in f.readlines()])
+    return stopwords
+
+def _read_left_word(filePath):
+    left_word = {}
+    with open(filePath, mode='r') as f:
+        for line in f.readlines():
+            x = line.strip("\n").split(" ")
+            left_word[x[0]] = x[1]
+    return left_word
 
 class NLP:
     def __init__(self, text):
@@ -15,8 +27,8 @@ class NLP:
 
     # Đọc stopword, leftword, reverse
     def set_stopword_and_leftword(self):
-        stop_word = FileReader(path=Setting.STOP_WORD).read_stopword()
-        left_word = FileReader(path=Setting.LEFT_WORD).read_left_word()
+        stop_word = _read_stop_word(setting.DIR_PATH_DATA + "/stop_word.txt")
+        left_word = _read_left_word(setting.DIR_PATH_DATA + "/left_word.txt")
         return stop_word, left_word
 
     def remove_negative_word(self):
@@ -33,8 +45,8 @@ class NLP:
     def split_words(self):
         tokens = self.remove_negative_word()
         try:
-            return [x.strip(Setting.SPECIAL_CHARACTER).lower()
-                    for x in tokens if len(x.strip(Setting.SPECIAL_CHARACTER)) > 0]
+            return [x.strip(setting.SPECIAL_CHARACTER).lower()
+                    for x in tokens if len(x.strip(setting.SPECIAL_CHARACTER)) > 0]
         except TypeError:
             return []
 
