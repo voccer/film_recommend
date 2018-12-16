@@ -97,7 +97,6 @@ class GetListFilm:
             list_film.append("https://www.imdb.com/" + x.contents[3].find('a', href = True)['href'].split('?')[0])
             count += 1
             if count == self.number: break
-        print(len(list_film))
         return np.array(list_film)
 
     def get_list(self):

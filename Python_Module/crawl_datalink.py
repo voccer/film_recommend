@@ -7,10 +7,8 @@ import os
 import Browser
 
 class SeleniumCrawler():
-    def __init__(self, film_list, exclusion_list = None):
+    def __init__(self, film_list):
         self.film_list = film_list
-        print(film_list)
-        self.exclusion_list = exclusion_list
         self.LinkImage = ""  # Lấy link film cho vào hàm download_image  (Không liên quan đến data frame)
         self.NAMEFILM = ""   # Lấy tên file cho vào hàm save_image (Không liên quan đến data frame)
         self.data_frame = pd.DataFrame(columns = ['LinkFilm', 'NameFilm','Star','Date','Description',
@@ -72,5 +70,6 @@ class SeleniumCrawler():
                 self.download_images(self.LinkImage)
 
         self.browser.close()
-        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
+        return (self.data_frame)
+        # self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
 
