@@ -24,13 +24,11 @@ public class ReaderCSV {
 		ArrayList<String> listDesc = new ArrayList<>();
 		ArrayList<String> listTotal = new ArrayList<>();
 		ArrayList<String> listPosotive = new ArrayList<>();
-		ArrayList<String> listScore = new ArrayList<>();
 		ArrayList<String> listAVG = new ArrayList<>();
 		try (
 				Reader reader = Files.newBufferedReader(Paths.get(PATH));
 				//System.out.println(reader.toString());
 				CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
-	                   //.withHeader("","LinkFilm", "NameFilm", "Start", "Date","Description", "Link_Image", "Total_Comment", "Positive_Comment")
 						.withFirstRecordAsHeader()
 						.withIgnoreHeaderCase()
 	                    .withTrim());
@@ -44,7 +42,6 @@ public class ReaderCSV {
                 listDesc.add(csvRecord.get("Description"));
                 listTotal.add(csvRecord.get("TotalComment"));
                 listPosotive.add(csvRecord.get("PositiveComment"));
-                listScore.add(csvRecord.get("ScoreComment"));
                 listAVG.add(csvRecord.get("AVGStar"));
 			}
 		}
@@ -55,7 +52,6 @@ public class ReaderCSV {
 		list.add(listDesc);
 		list.add(listTotal);
 		list.add(listPosotive);
-		list.add(listScore);
 		list.add(listAVG);
 		return list;
 	}

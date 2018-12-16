@@ -29,7 +29,7 @@ class GetListFilm:
     Chỉ lưu các trường hợp cần tìm vào mảng
     """
     def __read_request_file(self):
-        with open(Setting.DIR_PATH_COMMUNICATION + "/request.txt", mode ='r') as file:
+        with open(setting.DIR_PATH_COMMUNICATION + "/request.txt", mode ='r') as file:
             file = file.readlines()
         for f in file:
             if (f.find('1') != -1) and (not f.replace('-','').strip('\n ').isdigit()):
@@ -45,7 +45,6 @@ class GetListFilm:
         wait = WebDriverWait(self.browser, 10)
         xpath = ".//label[contains(text(),'%')]/preceding-sibling::input[@type='checkbox']"
         for x in self.request:
-            print(self.request)
             e1 = wait.until(EC.presence_of_element_located((By.XPATH, xpath.replace('%', x))))
             e1.click()
             time.sleep(.2)

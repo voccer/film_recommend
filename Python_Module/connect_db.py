@@ -58,18 +58,14 @@ def create_table_data():
             query_create_table = """
                create table if not exists data(
                     id int primary key auto_increment,
-                    name text not null,
-                    link text not null,
-                    date text,
-                    description text,
-                    total_comment int,
-                    nagative_comment int,
-                    positive_comment int,
-                    avg_cmt_point double,
-                    avg_star_point double,
-                    start_expert_point double,
-                    characters text,
-                    manufacturer text
+                    LinkFilm text not null,
+                    NameFilm text not null,
+                    Star text,
+                    Date text,
+                    Description text,
+                    TotalComment int,
+                    PositiveComment int,
+                    AVGStar double,
                 );
             """
             cs.execute(query_create_table)
@@ -85,9 +81,7 @@ def select_all():
                 select * from data
             """
             cs.execute(query_select_all)
-            
-            for row in cs:
-                print(row)
+        
             return cs
     finally:
         # close connection
@@ -102,13 +96,14 @@ def select_link():
                 select link from data
             """
             cs.execute(query_select_link)
-            for row in cs:
-                print(row)
-            return cs
+            result = cs.fetchall()
+            return result
     finally:
         connection.close()
+        
 
-data_insert = ("a", "a", "a", "c", 10, 10, 12, 12, 11, 11, "a", "a")
+
+data_insert = ("https://www.imdb.com//title/tt1520211/", "a", "a", "c", "a", 10, 12, 12,)
 
 def insert():
     try:
@@ -119,8 +114,8 @@ def insert():
                 nagative_comment,  positive_comment, avg_cmt_point, avg_star_point, 
                 start_expert_point, characters, manufacturer)
                 values
-                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
-                  # ("a", "a", "a", "c", 10, 10, 12, 12, 11, 11, "a", "a"),
+                    (%s, %s, %s, %s, %s, %s, %s, %s);
+                  # ("a", "a", "a", "c", 10, a", "a"),
                     
             """
             cs.execute(query_insert, data_insert)
@@ -132,8 +127,8 @@ if __name__ == '__main__':
 #     create_database()
 #     create_table_data()
     insert()
-    select_all()
-    select_link()
+   # select_all()
+   # select_link()
     
     
     

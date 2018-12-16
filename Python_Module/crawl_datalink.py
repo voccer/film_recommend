@@ -12,7 +12,7 @@ class SeleniumCrawler():
         self.LinkImage = ""  # Lấy link film cho vào hàm download_image  (Không liên quan đến data frame)
         self.NAMEFILM = ""   # Lấy tên file cho vào hàm save_image (Không liên quan đến data frame)
         self.data_frame = pd.DataFrame(columns = ['LinkFilm', 'NameFilm','Star','Date','Description',
-                                    'TotalComment','PositiveComment','ScoreComment','AVGStar'])
+                                    'TotalComment','PositiveComment', 'AVGStar'])
         self.browser = Browser.get_driver()
         self.output_image = setting.DIR_PATH_DATA + "/image"
 
@@ -60,7 +60,7 @@ class SeleniumCrawler():
             soup = Browser.get_soup(html)
             pos, total, avg_star = get_comment.GetComment(self.browser).run_crawler(link + "reviews")
             table = [link] + self.get_data(soup) + \
-                        [total, pos, "{0:.2f}".format(pos/total) if total != 0 else -1, "{0:.2f}".format(avg_star)]
+                        [total, pos, "{0:.2f}".format(avg_star)]
             self.data_frame.loc[index] = table
             '''
                 xét LinkFilm bằng NONE thì không tải
