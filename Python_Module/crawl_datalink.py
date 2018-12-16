@@ -43,7 +43,7 @@ class SeleniumCrawler():
     Phân tích mã nguồn ở soup truyền vào và lấy comment, đánh giá theo sao của người dùng 
     """
     def get_data(self, soup):
-        nameFilm = soup.find("div", class_="title_wrapper").find("h1").get_text().replace("\n"," ")
+        nameFilm = soup.find("div", class_="title_wrapper").find("h1").get_text().replace("\n"," ").strip()
         try: star = soup.find("div", class_="ratingValue").find("span", attrs={"itemprop" : "ratingValue"}).get_text().replace("\n"," ")
         except(Exception): star = ""
         date = soup.find("div", class_="subtext").find("a", title="See more release dates").get_text().replace("\n"," ")
@@ -62,5 +62,4 @@ class SeleniumCrawler():
             self.data_frame.loc[index] = table
 
         self.browser.close()
-        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv")
-
+        self.data_frame.to_csv(setting.DIR_PATH_DATA + "/file.csv", index=False)
