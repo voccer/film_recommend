@@ -11,7 +11,13 @@ hàm insert: insert thông tin
 
 import pymysql
 
- 
+
+# # from sqlalchemy import create_engine
+
+
+
+
+
 #init database
 host = "127.0.0.1"
 username = "voccer"
@@ -43,6 +49,11 @@ def create_database():
         # close connection
         connection.close()
 def get_connect():
+#     
+#     engine = create_engine("mysql+pymysql://voccer:ducquang@localhost/film_recommend")
+#     con = engine.connect()
+#     return con
+
     try:
         connection = pymysql.connect(host, username, password, database_name)
         connection.autocommit(True)
@@ -65,7 +76,7 @@ def create_table_data():
                     Description text,
                     TotalComment int,
                     PositiveComment int,
-                    AVGStar double,
+                    AVGStar double
                 );
             """
             cs.execute(query_create_table)
@@ -81,8 +92,8 @@ def select_all():
                 select * from data
             """
             cs.execute(query_select_all)
-        
-            return cs
+            result = cs.fetchall()
+            return result
     finally:
         # close connection
         connection.close()
@@ -93,7 +104,7 @@ def select_link():
         connection = get_connect()
         with connection.cursor() as cs:
             query_select_link = """
-                select link from data
+                select LinkFilm from data
             """
             cs.execute(query_select_link)
             result = cs.fetchall()
@@ -110,9 +121,8 @@ def insert():
         connection = get_connect()
         with connection.cursor() as cs:
             query_insert = """
-                insert into data(name, link, date, description, total_comment,
-                nagative_comment,  positive_comment, avg_cmt_point, avg_star_point, 
-                start_expert_point, characters, manufacturer)
+                insert into data(LinkFilm, NameFilm, Star, Date, Description,
+                TotalComment,  PositiveComment, AVGStar)
                 values
                     (%s, %s, %s, %s, %s, %s, %s, %s);
                   # ("a", "a", "a", "c", 10, a", "a"),
@@ -124,11 +134,13 @@ def insert():
     
 if __name__ == '__main__':
     #drop_database()
-#     create_database()
-#     create_table_data()
-    insert()
-   # select_all()
+    #create_database()
+    #create_table_data()
+    #insert()
+    print("end")
+    select_all()
    # select_link()
+ 
     
     
     

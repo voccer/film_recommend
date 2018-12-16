@@ -58,7 +58,7 @@ class GetComment():
     def run_crawler(self, url):
         html = self.get_page(url)
         soup = Browser.get_soup(html=html)
-        self. get_data(soup)
+        self.get_data(soup)
         if len(self.comment) == 0 : return 0, 0, 0
         pos, total = ML().get_score(self.comment)
         avg_star = np.sum(np.array(self.star))/total
