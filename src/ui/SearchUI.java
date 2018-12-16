@@ -163,7 +163,7 @@ public class SearchUI extends JFrame {
 		ckbDrama = new Checkbox("Drama");
 		ckbFamily = new Checkbox("Family");
 		ckbFantasy = new Checkbox("Fantasy");
-		ckbGameShow = new Checkbox("Game-show");
+		ckbGameShow = new Checkbox("Game-Show");
 		ckbHistory = new Checkbox("History");
 		ckbHorror = new Checkbox("Horror");
 		ckbMusic = new Checkbox("Music");
@@ -173,7 +173,7 @@ public class SearchUI extends JFrame {
 		ckbRealityTV = new Checkbox("Reality-TV");
 		ckbRomance = new Checkbox("Romance");
 		ckbSport = new Checkbox("Sport");
-		ckbTalkShow = new Checkbox("Talk-show");
+		ckbTalkShow = new Checkbox("Talk-Show");
 		ckbThriller = new Checkbox("Thriller");
 		ckbWar = new Checkbox("War");
 		ckbWestern = new Checkbox("Western");

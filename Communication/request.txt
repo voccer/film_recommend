@@ -4,11 +4,11 @@ TV Series 0
 TV Episode 0
 TV Special 0
 Mini-Series 0
-Documentary 1
+Documentary 0
 Video Game 0
 Short Film 0
 Video 0
-TV Short 0
+TV Short 1
 Action 0
 Adventure 0
 Animation 0
@@ -18,7 +18,7 @@ Crime 0
 Drama 0
 Family 0
 Fantasy 0
-Game-show 0
+Game-Show 0
 History 0
 Horror 0
 Music 0
@@ -28,7 +28,7 @@ News 0
 Reality-TV 0
 Romance 0
 Sport 0
-Talk-show 0
+Talk-Show 0
 Thriller 0
 War 0
 Western 0
@@ -42,4 +42,4 @@ Walt Disney 0
 Warner Bros 0
 
 
-14
+20

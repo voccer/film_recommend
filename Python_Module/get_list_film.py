@@ -1,8 +1,8 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-import Browser, Setting as setting
-from crawl_datalink import SeleniumCrawler
+import Setting
+import Browser
 from selenium import webdriver
 import time
 import numpy as np
@@ -18,12 +18,7 @@ class GetListFilm:
         self.request = []
         self.request_time = []
         self.number = 0
-
-
         self.browser = webdriver.Chrome()
-
-
-
         self.browser.get("https://www.imdb.com/search/title")
 
     """
@@ -31,7 +26,7 @@ class GetListFilm:
     Chỉ lưu các trường hợp cần tìm vào mảng
     """
     def __read_request_file(self):
-        with open(setting.DIR_PATH_COMMUNICATION + "/request.txt", mode ='r') as file:
+        with open(Setting.DIR_PATH_COMMUNICATION + "/request.txt", mode ='r') as file:
             file = file.readlines()
         for f in file:
             if (f.find('1') != -1) and (not f.replace('-','').strip('\n ').isdigit()):
@@ -102,8 +97,8 @@ class GetListFilm:
         for x in film_div:
             list_film.append("https://www.imdb.com/" + x.contents[3].find('a', href = True)['href'].split('?')[0])
             count += 1
-            if count == self.number: break
-        print(len(list_film))
+            if count == self.number: 
+                break
         return np.array(list_film)
 
     def get_list(self):

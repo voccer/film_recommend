@@ -38,7 +38,7 @@ public class ReaderCSV {
 				// Accessing Values by Column Index
 				listLinkFilm.add(csvRecord.get("LinkFilm"));
                 listNameFilm.add(csvRecord.get("NameFilm"));
-                listStar.add(csvRecord.get("Start"));
+                listStar.add(csvRecord.get("Star"));
                 listDate.add(csvRecord.get("Date"));
                 listDesc.add(csvRecord.get("Description"));
                 listLinkImage.add(csvRecord.get("LinkImage"));
