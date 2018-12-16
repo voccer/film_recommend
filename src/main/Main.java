@@ -2,13 +2,9 @@ package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-<<<<<<< HEAD
-
-=======
->>>>>>> voccer/to_sql
 
 import test.ReaderCSV;
-
+import ui.ResultUI;
 import ui.SearchUI;
 
 public class Main {
