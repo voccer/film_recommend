@@ -22,9 +22,10 @@ public class ReaderCSV {
 		ArrayList<String> listStar = new ArrayList<>();
 		ArrayList<String> listDate = new ArrayList<>();
 		ArrayList<String> listDesc = new ArrayList<>();
-		ArrayList<String> listLinkImage = new ArrayList<>();
 		ArrayList<String> listTotal = new ArrayList<>();
 		ArrayList<String> listPosotive = new ArrayList<>();
+		ArrayList<String> listScore = new ArrayList<>();
+		ArrayList<String> listAVG = new ArrayList<>();
 		try (
 				Reader reader = Files.newBufferedReader(Paths.get(PATH));
 				//System.out.println(reader.toString());
@@ -41,9 +42,10 @@ public class ReaderCSV {
                 listStar.add(csvRecord.get("Star"));
                 listDate.add(csvRecord.get("Date"));
                 listDesc.add(csvRecord.get("Description"));
-                listLinkImage.add(csvRecord.get("LinkImage"));
                 listTotal.add(csvRecord.get("TotalComment"));
                 listPosotive.add(csvRecord.get("PositiveComment"));
+                listScore.add(csvRecord.get("ScoreComment"));
+                listAVG.add(csvRecord.get("AVGStar"));
 			}
 		}
 		list.add(listLinkFilm);
@@ -51,10 +53,10 @@ public class ReaderCSV {
 		list.add(listStar);
 		list.add(listDate);
 		list.add(listDesc);
-		list.add(listLinkImage);
 		list.add(listTotal);
 		list.add(listPosotive);
-		
+		list.add(listScore);
+		list.add(listAVG);
 		return list;
 	}
 }

@@ -4,15 +4,15 @@ import java.util.Date;
 
 public class Film {
 	private String name;
-	private Date date;
-	private int score;
+	private String date;
+	private String score;
 	
 	public Film()
 	{
-		super();
+		super();	
 	}
 
-	public Film(String name, Date date, int score) {
+	public Film(String name, String date, String score) {
 		super();
 		this.name = name;
 		this.date = date;
@@ -27,19 +27,19 @@ public class Film {
 		this.name = name;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
-	public int getScore() {
+	public String getScore() {
 		return score;
 	}
 
-	public void setScore(int score) {
+	public void setScore(String score) {
 		this.score = score;
 	}
 	

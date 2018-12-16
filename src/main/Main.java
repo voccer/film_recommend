@@ -2,7 +2,10 @@ package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
+<<<<<<< HEAD
 
+=======
+>>>>>>> voccer/to_sql
 
 import test.ReaderCSV;
 
@@ -22,9 +25,8 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(ListInfo.get(0).get(1));
-		//ResultUI ui = new ResultUI("Result");
-		//ui.showWindow();
+		ResultUI abc = new ResultUI("Result");
+		abc.showWindow();
 	}
 
 }
