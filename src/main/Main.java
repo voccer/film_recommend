@@ -2,7 +2,6 @@ package main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import test.ReaderCSV;
 import ui.ResultUI;
 import ui.SearchUI;
