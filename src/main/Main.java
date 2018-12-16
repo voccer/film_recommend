@@ -6,6 +6,7 @@ import test.ReaderCSV;
 import ui.ResultUI;
 import ui.SearchUI;
 
+
 public class Main {
 	private static String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
 	public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ResultUI abc = new ResultUI("Result");
+		ResultUI abc = new ResultUI("Resultsd");
 		abc.showWindow();
 	}
 
