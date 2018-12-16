@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import model.Film;
+import test.ReaderCSV;
 
 public class ResultUI extends JFrame {
 	
 	JTable tblFilms;
 	DefaultTableModel dm;
-	
+	private static ArrayList<ArrayList<String>> ListInfo ;
 	JTextField txtName, txtLink, txtDate,
 			   txtNumberCmt, txtNumberNag, txtNumberPos;
 	
@@ -191,26 +193,34 @@ public class ResultUI extends JFrame {
 				{
 					return;
 				}
-				txtName.setText(tblFilms.getValueAt(row, 0)+"");
-				txtDate.setText(tblFilms.getValueAt(row, 1)+"");
+				txtLink.setText(ListInfo.get(0).get(row));
+				txtName.setText(ListInfo.get(1).get(row));
+				txtDate.setText(ListInfo.get(3).get(row));
+				txtAreaDescription.setText(ListInfo.get(4).get(row));
+				txtNumberCmt.setText(ListInfo.get(5).get(row));
+				txtNumberNag.setText(String.valueOf((Integer.parseInt(ListInfo.get(5).get(row)) - Integer.parseInt(ListInfo.get(6).get(row)))));
+				txtNumberPos.setText(ListInfo.get(6).get(row));
 			}
 		});
 	}
-	
 	private void addFakeData(){
 		ArrayList<Film> listFilm = new ArrayList<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		
+		String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
+		ReaderCSV read = new ReaderCSV();
+		ListInfo = new ArrayList<>();
+		try {
+			ListInfo = read.ReadCsv(SAMPLE_CSV_FILE_PATH);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try
 		{
-			listFilm.add(new Film("Harry Poter", sdf.parse("25-12-2018"), 99));
-			listFilm.add(new Film("Maria Ozawa", sdf.parse("24-12-2018"), 80));
-			listFilm.add(new Film("Yoshizawa", sdf.parse("26-12-2018"), 100));
-			listFilm.add(new Film("Haneda", sdf.parse("25-12-2018"), 99));
-			listFilm.add(new Film("Ishihara", sdf.parse("25-12-2018"), 99));
-			listFilm.add(new Film("Suzuhara", sdf.parse("25-12-2018"), 99));
+			for(int j = 0; j < ListInfo.get(0).size(); j++) {// Name Date 	...
+				listFilm.add(new Film(ListInfo.get(1).get(j), ListInfo.get(3).get(j), ListInfo.get(7).get(j)));
+			}				
 		}
-		catch (ParseException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
