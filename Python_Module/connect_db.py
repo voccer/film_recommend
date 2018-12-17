@@ -80,20 +80,7 @@ def create_table_data():
                 );
             """
             
-            '''
-            các trường liên quan tới việc đánh giá..
-            date
-            totalComment
-            PositiveComment
-            AVG star -- sao trung bình của các bình luận
-            star -- sao của chuyên gia đánh giá cho phim
-            
-            thứ tự: positiveComment/totalComment --->1
-                    totalComment/currentDate - Date --->2
-                    
-                    AVG star --> 3
-                    star -->4
-            '''
+        
             cs.execute(query_create_table)
     finally:
          # close connection
