@@ -3,21 +3,27 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -26,23 +32,27 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import model.Film;
-import test.ReaderCSV;
+import model.FilmDetail;
+import model.TOPSIS;
 
 public class ResultUI extends JFrame {
 
 	JTable tblFilms;
 	DefaultTableModel dm;
-	private static ArrayList<ArrayList<String>> ListInfo;
-	JTextField txtName, txtLink, txtDate, txtNumberCmt, txtNumberNag, txtNumberPos;
-	
+	private static ArrayList<FilmDetail> listFilm;
+	JTextField txtName, txtLink, txtStar, txtNumberCmt, txtNumberNag, txtNumberPos, txtEvaluation;
+
+	JButton Enter;
 	JTextArea txtAreaDescription;
 	String SAMPLE_IMAGE_FILE_PATH = System.getProperty("user.dir") + "/Data/image/";
-	private static String nameImage = " ";
+	private static String nameImage = "Aquaman: De Vuong Atlantis (2018).jpg";
 	BufferedImage image;
 	ImageIcon icon;
 	JPanel pnImage;
 	JLabel lblImage;
+	JPanel pnRight;
+	private static int row;
+
 	public ResultUI(String title) {
 		super(title);
 		addControls();
@@ -54,13 +64,13 @@ public class ResultUI extends JFrame {
 		Container con = getContentPane();
 		con.setLayout(new BorderLayout());
 		JPanel pnLeft = new JPanel();
-		JPanel pnRight = new JPanel();
+		pnRight = new JPanel();
 		JSplitPane sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnLeft, pnRight);
 		con.add(sp);
 
 		// Left
 		pnLeft.setLayout(new BorderLayout());
-		pnLeft.setPreferredSize(new Dimension(600, 700));
+		pnLeft.setPreferredSize(new Dimension(500, 700));
 
 		dm = new DefaultTableModel();
 		dm.addColumn("Name");
@@ -75,17 +85,17 @@ public class ResultUI extends JFrame {
 		pnLeft.add(sc, BorderLayout.CENTER);
 
 		// Right
-		pnRight.setLayout(new GridLayout(8, 1));
+		pnRight.setLayout(new BoxLayout(pnRight, BoxLayout.Y_AXIS));
 		// Image
 		pnImage = new JPanel();
 		pnImage.setLayout(new GridBagLayout());
 		pnRight.add(pnImage);
 
 		lblImage = new JLabel();
-		lblImage.setSize(new Dimension(182, 268));
+		lblImage.setSize(new Dimension(122, 190));
 		try {
 			BufferedImage image = ImageIO.read(new File(SAMPLE_IMAGE_FILE_PATH + nameImage));
-			ImageIcon icon = new ImageIcon(image.getScaledInstance(110, 200, image.SCALE_SMOOTH));
+			ImageIcon icon = new ImageIcon(image.getScaledInstance(122, 170, image.SCALE_SMOOTH));
 			lblImage.setIcon(icon);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -97,7 +107,7 @@ public class ResultUI extends JFrame {
 		JLabel lblName = new JLabel("Name:");
 		lblName.setFont(new Font("Arial", Font.BOLD, 15));
 		txtName = new JTextField(40);
-//		txtName.setEditable(false);
+		txtName.setEditable(false);
 		pnRow1.add(lblName);
 		pnRow1.add(txtName);
 		pnRight.add(pnRow1);
@@ -107,19 +117,19 @@ public class ResultUI extends JFrame {
 		JLabel lblLink = new JLabel("Link:");
 		lblLink.setFont(new Font("Arial", Font.BOLD, 15));
 		txtLink = new JTextField(40);
-//		txtLink.setEditable(false);
+		txtLink.setEditable(false);
 		pnRow2.add(lblLink);
 		pnRow2.add(txtLink);
 		pnRight.add(pnRow2);
 
 		JPanel pnRow3 = new JPanel();
 		pnRow3.setLayout(new GridBagLayout());
-		JLabel lblDate = new JLabel("Date:");
+		JLabel lblDate = new JLabel("Star:");
 		lblDate.setFont(new Font("Arial", Font.BOLD, 15));
-		txtDate = new JTextField(40);
-//		txtDate.setEditable(false);
+		txtStar = new JTextField(40);
+		txtStar.setEditable(false);
 		pnRow3.add(lblDate);
-		pnRow3.add(txtDate);
+		pnRow3.add(txtStar);
 		pnRight.add(pnRow3);
 
 		JPanel pnRow4 = new JPanel();
@@ -128,7 +138,9 @@ public class ResultUI extends JFrame {
 		JLabel lblDescription = new JLabel("Description:");
 		lblDescription.setFont(new Font("Arial", Font.BOLD, 15));
 		txtAreaDescription = new JTextArea(5, 40);
-//		txtAreaDescription.setEditable(false);
+		txtAreaDescription.setLineWrap(true);
+		txtAreaDescription.setWrapStyleWord(true);
+		txtAreaDescription.setEditable(false);
 		JScrollPane scDes = new JScrollPane(txtAreaDescription, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		pnRow4.add(lblDescription);
@@ -136,46 +148,62 @@ public class ResultUI extends JFrame {
 		pnRight.add(pnRow4);
 
 		JPanel pnRow5 = new JPanel();
-		pnRow5.setLayout(new GridBagLayout());
-		JLabel lblNumberCmt = new JLabel("NumberCmt: ");
+		pnRow5.setLayout(new FlowLayout());
+		JLabel lblNumberCmt = new JLabel("Total Comment:");
 		lblNumberCmt.setFont(new Font("Arial", Font.BOLD, 15));
-		txtNumberCmt = new JTextField(40);
-//		txtNumberCmt.setEditable(false);
+		txtNumberCmt = new JTextField(7);
+		txtNumberCmt.setEditable(false);
+
+		JLabel lblNumberNag = new JLabel("Negative:");
+		lblNumberNag.setFont(new Font("Arial", Font.BOLD, 15));
+		txtNumberNag = new JTextField(7);
+		txtNumberNag.setEditable(false);
+
+		JLabel lblNumberPos = new JLabel("Positive:");
+		lblNumberPos.setFont(new Font("Arial", Font.BOLD, 15));
+		txtNumberPos = new JTextField(7);
+		txtNumberPos.setEditable(false);
 		pnRow5.add(lblNumberCmt);
 		pnRow5.add(txtNumberCmt);
+		pnRow5.add(lblNumberPos);
+		pnRow5.add(txtNumberPos);
+		pnRow5.add(lblNumberNag);
+		pnRow5.add(txtNumberNag);
 		pnRight.add(pnRow5);
 
 		JPanel pnRow6 = new JPanel();
 		pnRow6.setLayout(new GridBagLayout());
-		JLabel lblNumberNag = new JLabel("NumberNag: ");
-		lblNumberNag.setFont(new Font("Arial", Font.BOLD, 15));
-//		txtNumberNag.setEditable(false);
-		txtNumberNag = new JTextField(40);
-		pnRow6.add(lblNumberNag);
-		pnRow6.add(txtNumberNag);
+		JLabel lblScoreEvaluation = new JLabel("Evaluation of user: ");
+		lblScoreEvaluation.setFont(new Font("Arial", Font.BOLD, 15));
+		txtEvaluation = new JTextField(5);
+		txtEvaluation.setEditable(false);
+		pnRow6.add(lblScoreEvaluation);
+		pnRow6.add(txtEvaluation);
+		Enter = new JButton("Save");
+		pnRow6.add(Enter);
 		pnRight.add(pnRow6);
-
-		JPanel pnRow7 = new JPanel();
-		pnRow7.setLayout(new GridBagLayout());
-		JLabel lblNumberPos = new JLabel("NumberPos: ");
-		lblNumberPos.setFont(new Font("Arial", Font.BOLD, 15));
-		txtNumberPos = new JTextField(40);
-//		txtNumberPos.setEditable(false);
-		pnRow7.add(lblNumberPos);
-		pnRow7.add(txtNumberPos);
-		pnRight.add(pnRow7);
 
 		// Align
 		lblName.setPreferredSize(lblNumberCmt.getPreferredSize());
 		lblLink.setPreferredSize(lblNumberCmt.getPreferredSize());
 		lblDate.setPreferredSize(lblNumberCmt.getPreferredSize());
-		lblNumberCmt.setPreferredSize(lblNumberCmt.getPreferredSize());
-		lblNumberNag.setPreferredSize(lblNumberCmt.getPreferredSize());
-		lblNumberPos.setPreferredSize(lblNumberCmt.getPreferredSize());
+//		lblNumberCmt.setPreferredSize(lblNumberCmt.getPreferredSize());
+//		lblNumberNag.setPreferredSize(lblNumberCmt.getPreferredSize());
+//		lblNumberPos.setPreferredSize(lblNumberCmt.getPreferredSize());
 		lblDescription.setPreferredSize(lblNumberCmt.getPreferredSize());
+		// lblScoreEvaluation.setPreferredSize(lblNumberCmt.getPreferredSize());
 	}
 
 	public void addEvents() {
+
+		Enter.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				handingEntered();
+			}
+		});
+
 		tblFilms.addMouseListener(new MouseListener() {
 
 			@Override
@@ -204,58 +232,100 @@ public class ResultUI extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int row = tblFilms.getSelectedRow();
-				if (row == -1) {
-					return;
-				}
-				txtLink.setText(ListInfo.get(0).get(row));
-				txtName.setText(ListInfo.get(1).get(row));
-				txtDate.setText(ListInfo.get(3).get(row));
-				txtAreaDescription.setText(ListInfo.get(4).get(row));
-				txtNumberCmt.setText(ListInfo.get(5).get(row));
-				txtNumberNag.setText(String.valueOf(
-						(Integer.parseInt(ListInfo.get(5).get(row)) - Integer.parseInt(ListInfo.get(6).get(row)))));
-				txtNumberPos.setText(ListInfo.get(6).get(row));
-				
-				// add image
-				try {
-					BufferedImage image = ImageIO.read(new File(SAMPLE_IMAGE_FILE_PATH + ListInfo.get(1).get(row) + ".jpg"));
-					ImageIcon icon = new ImageIcon(image.getScaledInstance(110, 200, image.SCALE_SMOOTH));
-					lblImage.setIcon(icon);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				pnImage.add(lblImage);
-				nameImage = ListInfo.get(1).get(row) + ".jpg";
-				System.out.println(nameImage);
+				handingMouseClicked();
 			}
 		});
 	}
 
-	private void addFakeData() {
-		ArrayList<Film> listFilm = new ArrayList<>();
-		String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
-		ReaderCSV read = new ReaderCSV();
-		ListInfo = new ArrayList<>();
-		try {
-			ListInfo = read.ReadCsv(SAMPLE_CSV_FILE_PATH);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			for (int j = 0; j < ListInfo.get(0).size(); j++) {// Name Date ...
-				listFilm.add(new Film(ListInfo.get(1).get(j), ListInfo.get(3).get(j), ListInfo.get(7).get(j)));
+	protected void handingEntered() {
+		String evaluation = txtEvaluation.getText();
+		if (evaluation.equals("")) {
+			JOptionPane.showMessageDialog(null, "Nhập số điểm bạn đánh giá (thang điểm 100), hãy nhập lại!",
+					"Thông báo", JOptionPane.WARNING_MESSAGE);
+		} else if (!isNumber(evaluation)) {
+			JOptionPane.showMessageDialog(null, "Nhập số điểm bạn đánh giá (thang điểm 100), hãy nhập lại!",
+					"Thông báo", JOptionPane.WARNING_MESSAGE);
+		} else {
+			int scoreUser = Integer.parseInt(evaluation);
+			if (scoreUser < 0 || scoreUser > 100) {
+				JOptionPane.showMessageDialog(null, "Nhập số điểm bạn đánh giá (thang điểm 100), hãy nhập lại!",
+						"Thông báo", JOptionPane.WARNING_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(null, "Cảm ơn bạn đã đánh giá!", "Thông báo", JOptionPane.PLAIN_MESSAGE);
+				writeFile(listFilm.get(row).getScore_rank(), scoreUser,
+						System.getProperty("user.dir") + "/Data/evaluation.txt");
 			}
+		}
+	}
+
+	// Ghi file
+	private void writeFile(Float Score, int Evaluation, String path) {
+		try {
+			String score = Score.toString();
+			String evaluation = String.valueOf(Evaluation);
+			File f = new File(path);
+			FileWriter fw = new FileWriter(f, true);
+			fw.write(score + " " + evaluation + "\n");
+			fw.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
-		for (Film film : listFilm) {
-			Vector<String> vec = new Vector<>();
+	// kiểm tra xem String có chuyển được sang Int không?
+	private boolean isNumber(String string) {
+		try {
+			int number = Integer.parseInt(string);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	protected void handingMouseClicked() {
+		row = tblFilms.getSelectedRow();
+		if (row == -1) {
+			return;
+		}
+		txtLink.setText(listFilm.get(row).getLink());
+		txtName.setText(listFilm.get(row).getName());
+		txtStar.setText(String.valueOf(listFilm.get(row).getScore_star()));
+		txtAreaDescription.setText(listFilm.get(row).getDescription());
+		txtNumberCmt.setText(String.valueOf(listFilm.get(row).getTotalcomment()));
+		txtNumberNag
+				.setText(String.valueOf(listFilm.get(row).getTotalcomment() - listFilm.get(row).getPositivecomment()));
+		txtNumberPos.setText(String.valueOf(listFilm.get(row).getPositivecomment()));
+
+		// add image
+		try {
+			BufferedImage image = ImageIO.read(new File(SAMPLE_IMAGE_FILE_PATH + listFilm.get(row).getName() + ".jpg"));
+			ImageIcon icon = new ImageIcon(image.getScaledInstance(122, 170, image.SCALE_SMOOTH));
+			lblImage.setIcon(icon);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		pnImage.add(lblImage);
+
+		JPanel pnRow6 = new JPanel();
+		pnRow6.setLayout(new GridBagLayout());
+		JLabel lblScoreEvaluation = new JLabel("Evaluation of user: ");
+		lblScoreEvaluation.setFont(new Font("Arial", Font.BOLD, 15));
+		// Bật edit
+		txtEvaluation.setEditable(true);
+		pnRight.add(pnRow6);
+	}
+
+	private void addFakeData() {
+		listFilm = new ArrayList<>();
+		String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
+		TOPSIS topsis = new TOPSIS();
+		listFilm = topsis.ListFilmRanked(SAMPLE_CSV_FILE_PATH);
+
+		for (FilmDetail film : listFilm) {
+			Vector vec = new Vector<>();
 			vec.add(film.getName());
-			vec.add(film.getDate() + "");
-			vec.add(film.getScore() + "");
+			vec.add(film.getYear());
+			vec.add(film.getScore_rank());
 			dm.addRow(vec);
 		}
 	}
