@@ -37,12 +37,12 @@ AVG star -- sao trung bình của các bình luận
 star -- sao của chuyên gia đánh giá cho phim
 
 Thứ tự: 
-		positiveComment/totalComment --->1
+		positiveComment/totalComment ---> 1
         totalComment/(currentDate - Date) --->2 # Trong đó currentDate - Date tính theo năm, bởi vì trong 1 năm, sự tương tác nhiều ít giữa các phim mình bỏ qua.
          										# Mình chỉ xét sự khác biệt trong các năm khác nhau, để giảm trọng số khi chuyên lệch qúa lớn
         
         AVG star ---> 3
-        star --->4
+        star ---> 4
 '''
 */	
 
