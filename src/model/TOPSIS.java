@@ -46,8 +46,8 @@ public class TOPSIS {
 			float sum_max = 0 ;
 			float sum_min = 0 ;
 			for (int j = 0; j < 4; j++) {
-				sum_max = (matrix[j][i] - A_max[j])*(matrix[j][i] - A_max[j]) ;
-				sum_min = (matrix[j][i] - A_min[j])*(matrix[j][i] - A_min[j]) ;
+				sum_max += (matrix[j][i] - A_max[j])*(matrix[j][i] - A_max[j]) ;
+				sum_min += (matrix[j][i] - A_min[j])*(matrix[j][i] - A_min[j]) ;
 			}
 			S_max[i] = (float) Math.sqrt(sum_max) ;
 			S_min[i] = (float) Math.sqrt(sum_min) ;
@@ -80,19 +80,22 @@ public class TOPSIS {
 		float[] weight = {(float) 0.4,(float) 0.3,(float) 0.2,(float) 0.1} ;
 		float[][] matrix = new float[4][tolrow] ;
 		// Gán giá trị
-		// thuộc tính đầu tiên và quan trọng nhất của ma trận là số bình luận trên tổng số bình luộn
+		// thuộc tính đầu tiên và quan trọng nhất của ma trận là số bình luận tốt trên tổng số bình luộn
 		for (int i = 0; i < tolrow ; i++) {
 			matrix[0][i] = arrayList.get(i).getPositivecomment()/(arrayList.get(i).getTotalcomment()+1) ;
 			
 		}
-		// thuộc tính quan trọng thứ 2 là tổng comment chia số năm
+		// thuộc tính quan trọng thứ 2 là điểm trung bình đánh giá của người xem
 		for (int i = 0; i < tolrow; i++) {
-			matrix[1][i] = arrayList.get(i).getTotalcomment()/(2019-arrayList.get(i).getYear());
+			matrix[1][i] = arrayList.get(i).getAvgstar() ;
 			
 		}
-		// thuộc tính quan trọng thứ 3 là trung bình đánh giá cho bộ phim
+		// thuộc tính quan trọng thứ 3 là tổng số bình luận chia cho tuổi đời của film
 		for (int i = 0; i < tolrow; i++) {
-			matrix[2][i] = arrayList.get(i).getAvgstar() ;
+			float old = 2018-arrayList.get(i).getYear() ;
+			old = old!= 0?old:1; 
+			matrix[2][i] = arrayList.get(i).getTotalcomment()/old;
+			
 		}
 		// thuộc tính quan trọng thứ 4 là điểm đánh giá của chuyên gia
 		for (int i = 0; i < tolrow; i++) {

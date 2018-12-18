@@ -86,12 +86,12 @@ public class ConversetListFilm {
 			}
 			if (index==4) {
 				year = Integer.valueOf(year_string.substring(i-3, i+1)) ;
-				if (year<2019 && year > 1980) {
+				if (year<=2019 && year > 1980) {
 					return year ;
 				}
 			}
 		}
-		return 2000;
+		return 2010;
 		
 	}
 	
