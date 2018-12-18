@@ -258,15 +258,36 @@ public class SearchUI extends JFrame {
 	}
 
 	public void addEvents() {
+		// System.out.println("comeherer");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (handingInfoSearch()) {
 					writeFile();
 					executePython();
 				}
-
 			}
 		});
+	}
+	
+	protected boolean handingInfoSearch() {
+		if (txtNumberOfFilms.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Rỗng", "Empty", JOptionPane.WARNING_MESSAGE);
+			return false;
+		} else {
+			int num = 0;
+			try {
+				num = Integer.parseInt(txtNumberOfFilms.getText());
+			} finally {
+
+			}
+			if (num > 50 || num <= 0) {
+				JOptionPane.showMessageDialog(null, "Bạn đã nhập sai !", "Error", JOptionPane.WARNING_MESSAGE);
+				return false;
+			} else {
+				return true;
+			}
+		}
+
 	}
 
 	protected void writeFile() {
@@ -396,35 +417,23 @@ public class SearchUI extends JFrame {
 
 	}
 
-	protected boolean handingInfoSearch() {
-		if (txtNumberOfFilms.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Rỗng", "Empty", JOptionPane.WARNING_MESSAGE);
-			return false;
-		} else {
-			int num = 0;
-			try {
-				num = Integer.parseInt(txtNumberOfFilms.getText());
-			} finally {
+	
 
-			}
-			if (num > 50 || num <= 0) {
-				JOptionPane.showMessageDialog(null, "Bạn đã nhập sai !", "Error", JOptionPane.WARNING_MESSAGE);
-				return false;
-			} else {
-				return true;
-			}
-		}
-
-	}
-
-	public void executePython()  {
+	public void executePython() {
+		
+		// Xóa csv nếu đã tồn tại do chương tình trước chạy
 		String dirPath = System.getProperty("user.dir");
+		File csv = new File(dirPath + "/Data/file.csv");
+		if (csv.exists()) {
+			csv.delete();
+		}
+		//System.out.println("comehere");
+		
 		File filePythonExecute = new File(dirPath + "/Python_Module/main.py");
 		if (!filePythonExecute.exists()) {
 			System.out.println("not found file");
 		}
-		
-		
+
 		Process process = null;
 		ProcessBuilder pb = new ProcessBuilder("/home/voccer/anaconda3/bin/python", filePythonExecute.getAbsolutePath());
 		try {
@@ -433,10 +442,10 @@ public class SearchUI extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		watch(process);
-		File csv = new File(dirPath + "/Data/file.csv");
-		while(!csv.exists()) {
+		
+		while (!csv.exists()) {
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -445,14 +454,12 @@ public class SearchUI extends JFrame {
 			}
 			System.out.println("Searching csv file");
 		}
-		System.out.println("begining next moulde");
+		System.out.println("Python Thread stop, begining next moulde");
 		// Module xuat ket qua
-		
 	}
-	
-	
+
 	// Hàm xem tiến trình chạy của process
-	
+
 	private static void watch(final Process process) {
 		new Thread() {
 			public void run() {
@@ -468,12 +475,31 @@ public class SearchUI extends JFrame {
 			}
 		}.start();
 	}
-
+	
+	
 	public void showWindow() {
 		this.setSize(1000, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
+		
+	}
+
+	public void checkComplete() {
+		String dirPath = System.getProperty("user.dir");
+		File csv = new File(dirPath + "/Data/file.csv");
+		while (true) {
+			System.out.println("vao ham checkComplete");
+			if (!csv.exists()) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else break;
+		}
 	}
 }

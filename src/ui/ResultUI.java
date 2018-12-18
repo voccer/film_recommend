@@ -320,7 +320,7 @@ public class ResultUI extends JFrame {
 		String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
 		TOPSIS topsis = new TOPSIS();
 		listFilm = topsis.ListFilmRanked(SAMPLE_CSV_FILE_PATH);
-
+		
 		for (FilmDetail film : listFilm) {
 			Vector vec = new Vector<>();
 			vec.add(film.getName());
@@ -328,6 +328,8 @@ public class ResultUI extends JFrame {
 			vec.add(film.getScore_rank());
 			dm.addRow(vec);
 		}
+		
+		
 	}
 
 	public void showWindow() {
@@ -335,5 +337,13 @@ public class ResultUI extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		
+		//deleteCSV();
+	}
+	
+	public void deleteCSV() {
+		String dirPath = System.getProperty("user.dir");
+		File csv = new File(dirPath + "/Data/file.csv");
+		csv.delete();
 	}
 }

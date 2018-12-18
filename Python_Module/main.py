@@ -1,3 +1,4 @@
+print("vao ham main cua python")
 
 from crawl_datalink import SeleniumCrawler
 from get_list_film import GetListFilm
@@ -10,6 +11,9 @@ from sqlalchemy import create_engine
 
 #List film sau khi crawl
 list_film = GetListFilm().get_list()
+
+
+
 
 def get_exclusion():
     e_list = []
@@ -62,8 +66,13 @@ dataframe_csv = pd.DataFrame(columns = ['id', 'LinkFilm', 'NameFilm','Star','Dat
 
 
 
+
+
 #lấy toàn bộ của db
-sql_link = connect_db.select_all()
+# lấy toàn bộ dữ liệu của phim vơi link có trong list film
+sql_link = connect_db.select_all_where_link(list_film)
+
+
 
 for index, link in enumerate(sql_link):
     dataframe_csv.loc[index] = link

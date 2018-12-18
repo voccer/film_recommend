@@ -118,6 +118,25 @@ def select_link():
 
 data_insert = ("https://www.imdb.com//title/tt1520211/", "a", "a", "c", "a", 10, 12, 12,)
 
+def select_all_where_link(list_film):
+    lf = "(";
+    for film in list_film:
+        lf = lf + "'" + film + "',"
+    
+    lf = lf[:-1]
+    lf = lf + ")"
+    
+    try:
+        connection = get_connect()
+        with connection.cursor() as cs:
+            query_select_all_where_link =  "select * from data where linkFilm in " +  lf + ";"
+            
+            cs.execute(query_select_all_where_link)
+            result = cs.fetchall()
+            return result
+    finally:
+        connection.close()
+    
 def insert():
     try:
         connection = get_connect()
@@ -135,13 +154,13 @@ def insert():
         connection.close()
     
 if __name__ == '__main__':
-    #drop_database()
-    #create_database()
-    #create_table_data()
+#     drop_database()
+#     create_database()
+#     create_table_data()
     #insert()
     print("end")
-    select_all()
-   # select_link()
+    #select_all()
+   #select_link()
  
     
     

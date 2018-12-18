@@ -1,24 +1,47 @@
 package main;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.File;
 
-import model.ConversetListFilm;
-import model.FilmDetail;
-import model.TOPSIS;
-import test.ReaderCSV;
 import ui.ResultUI;
 import ui.SearchUI;
 
 
 public class Main {
-	private static String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
 	public static void main(String[] args) {
 		
 		SearchUI ui = new SearchUI("Searching...");
 		ui.showWindow();
-		ResultUI abc = new ResultUI("Result");
-		abc.showWindow();
+		
+		String dirPath = System.getProperty("user.dir");
+		File csv = new File(dirPath + "/Data/file.csv");
+		while (true) {
+			System.out.println("Waiting UI complete");
+			if (!csv.exists()) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			else break;
+		}
+		//System.out.println("da co file csv");
+		ResultUI rs = new ResultUI("Result");
+		rs.showWindow();
+		
+		
+		// dừng 0.5 s để load xong csv
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// xóa file csv để thực hiện lần sau
+		
+		csv.delete();
 	}
 }
 
