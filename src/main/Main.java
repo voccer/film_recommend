@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import model.ConversetListFilm;
 import model.FilmDetail;
+import model.TOPSIS;
 import test.ReaderCSV;
 import ui.ResultUI;
 import ui.SearchUI;
@@ -14,15 +15,11 @@ public class Main {
 	private static String SAMPLE_CSV_FILE_PATH = System.getProperty("user.dir") + "/Data/file.csv";
 	public static void main(String[] args) {
 		
-		//SearchUI ui = new SearchUI("Searching...");
-		//ui.showWindow();
-		ConversetListFilm read = new ConversetListFilm();
-		ArrayList<FilmDetail> ListInfo = new ArrayList<>();
-		ListInfo = read.ReadCSV(SAMPLE_CSV_FILE_PATH);
-		ResultUI abc = new ResultUI("Resultsd");
+		SearchUI ui = new SearchUI("Searching...");
+		ui.showWindow();
+		ResultUI abc = new ResultUI("Result");
 		abc.showWindow();
 	}
-
 }
 
 /*
